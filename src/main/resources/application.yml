@@ -1,0 +1,56 @@
+
+spring:
+  profiles:
+    active: run_server
+#  mvc:
+#    # 静态文件存放                                                                   #springboot 默认 / 下访问
+#    static-path-pattern: /static/
+  thymeleaf:
+    cache: false
+  jackson:
+    time-zone: Hongkong
+    date-format: yyyy-MM-dd HH:mm:ss
+  web:                                                                                 #springboot 默认访问文件夹路径
+    resources:                                                                         #classpath:/META-INF/resources/,
+        static-locations: classpath:/classes!,classpath:/static,classpath:/public,classpath:/resources,classpath:/META-INF/resources,classpath:/,/,
+                                           #classpath:/resources/,
+                                                                                        #classpath:/static/,
+  servlet:
+    multipart:
+      max-file-size: 50MB  # 最大支持文件大小
+      max-request-size: 50MB  # 最大支持请求大小
+      #enabled: true  #默认支持文件上传.
+      # file-size-threshold: #支持文件写入磁盘.
+      #location: #上传文件的临时目录                                                                                        #classpath:/public/
+
+  #/：当前项目的根路径
+dqy:
+  address: "https://127.0.0.1/"
+  wx-appid:
+  wx-secretid:
+  prounce-url: "http://dict.youdao.com/dictvoice?type=1&audio=forklift"
+server:
+  servlet:
+    # session 30
+    session:
+      timeout: 3600s
+    #
+    context-path: /
+  # ?URLBasicErrorController
+  error:
+    path: /
+  # address:
+  tomcat:
+    # tomcat  URL
+    uri-encoding: UTF-8
+  port: 8085
+#  address: 127.0.0.1
+mybatis-plus:
+  # mybatis
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  type-aliases-package: com.dqy.englishstudyapi.tablebean #实体类所在包，允许用实体类类名作为别名
+mybatis:
+
