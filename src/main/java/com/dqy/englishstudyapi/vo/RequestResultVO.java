@@ -1,4 +1,4 @@
-package com.dqy.englishstudyapi.tablebean;
+package com.dqy.englishstudyapi.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,17 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
-
 @Data
 @NoArgsConstructor
-@ToString
 @AllArgsConstructor
+@ToString
 @Repository
-public class CikuN {
-    Integer id;
-    String initial;
-    Integer wid;
-    Timestamp createtime;
-    Timestamp updatetime;
+public class RequestResultVO<T> {
+
+    private Integer code;
+    private String msg;
+    private T result;
 }

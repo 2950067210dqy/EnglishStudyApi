@@ -2,6 +2,9 @@
 spring:
   profiles:
     active: run_server
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 #  mvc:
 #    # 静态文件存放                                                                   #springboot 默认 / 下访问
 #    static-path-pattern: /static/
@@ -26,9 +29,8 @@ spring:
   #/：当前项目的根路径
 dqy:
   address: "https://127.0.0.1/"
-  wx-appid:
-  wx-secretid:
-  prounce-url: "http://dict.youdao.com/dictvoice?type=1&audio=forklift"
+  prounceUrl: "http://dict.youdao.com/dictvoice?type=1&audio=forklift"
+  wordUrl: "https://dict.youdao.com/jsonapi_s?doctype=json&jsonversion=4"
 server:
   servlet:
     # session 30
@@ -47,6 +49,12 @@ server:
 #  address: 127.0.0.1
 mybatis-plus:
   # mybatis
+  global-config:
+    db-config:
+      # 那个字段是逻辑删除字段，也可以在字段上添加注解@TableLogic，在这里边配置是全局生效
+      logic-delete-field: deleted # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
   mapper-locations: classpath*:mapper/**/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqy.englishstudyapi.mapper.TestuserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dqy.englishstudyapi.tablebean.Testuser">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="name" property="name" />
+        <result column="phone" property="phone" />
+        <result column="sex" property="sex" />
+        <result column="headimg" property="headimg" />
+        <result column="password" property="password" />
+        <result column="role" property="role" />
+        <result column="registertime" property="registertime" />
+    </resultMap>
+
+</mapper>

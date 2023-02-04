@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqy.englishstudyapi.mapper.WordMapper">
+    <sql id="tableName">word_${suffix}</sql>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dqy.englishstudyapi.tablebean.Word">
+        <id column="id" property="id" />
+        <result column="word" property="word" />
+        <result column="trans" property="trans" />
+        <result column="soundmark1" property="soundmark1" />
+        <result column="soundmark2" property="soundmark2" />
+        <result column="deleted" property="deleted" />
+        <result column="createtime" property="createtime" />
+        <result column="updatetime" property="updatetime" />
+    </resultMap>
+    <select id="selectByWord" resultType="com.dqy.englishstudyapi.tablebean.Word">
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where
+        word = #{word}
+    </select>
+</mapper>

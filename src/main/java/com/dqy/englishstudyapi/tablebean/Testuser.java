@@ -3,7 +3,6 @@ package com.dqy.englishstudyapi.tablebean;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -28,27 +27,38 @@ import io.swagger.annotations.ApiModelProperty;
 @ToString
 @AllArgsConstructor
 @Repository
-@TableName("ciku")
-@ApiModel(value = "Ciku对象", description = "")
-public class Ciku implements Serializable {
+@TableName("testuser")
+@ApiModel(value = "Testuser对象", description = "")
+public class Testuser implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @TableField("desc")
-    private String desc;
+    @TableField("username")
+    private String username;
 
-    @TableField("deleted")
-    @TableLogic
-    private Integer deleted;
+    @TableField("name")
+    private String name;
 
-    @TableField("createtime")
-    private LocalDateTime createtime;
+    @TableField("phone")
+    private String phone;
 
-    @TableField("updatetime")
-    private LocalDateTime updatetime;
+    @TableField("sex")
+    private String sex;
+
+    @TableField("headimg")
+    private String headimg;
+
+    @TableField("password")
+    private String password;
+
+    @TableField("role")
+    private Integer role;
+
+    @TableField("registertime")
+    private LocalDateTime registertime;
 
 
 }

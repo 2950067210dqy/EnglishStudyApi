@@ -1,8 +1,9 @@
 package com.dqy.englishstudyapi.mapper;
 
-import com.dqy.englishstudyapi.tablebean.Prounce;
+import com.dqy.englishstudyapi.tablebean.Word;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,6 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2023-02-03
  */
 @Mapper
-public interface ProunceMapper extends BaseMapper<Prounce> {
+public interface WordMapper extends BaseMapper<Word> {
 
+    Word selectByWord(@Param("word") String word,@Param("suffix") Character initial);
 }

@@ -1,24 +1,63 @@
 package com.dqy.englishstudyapi.tablebean;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.stereotype.Repository;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+    import lombok.AllArgsConstructor;
+    import lombok.Data;
+    import lombok.NoArgsConstructor;
+    import lombok.ToString;
+    import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
-
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author 邓亲优
+ * @since 2023-02-03
+ */
 @Data
 @NoArgsConstructor
 @ToString
 @AllArgsConstructor
 @Repository
-public class Prounce {
-    Integer id;
-    String initial;
-    Integer wid;
-    String url1;
-    String url2;
-    Timestamp createtime;
-    Timestamp updatetime;
+@TableName("prounce")
+@ApiModel(value = "Prounce对象", description = "")
+public class Prounce implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
+
+    @TableField("initial")
+    private String initial;
+
+    @TableField("wid")
+    private Integer wid;
+
+    @TableField("url1")
+    private String url1;
+
+    @TableField("url2")
+    private String url2;
+
+    @TableField("deleted")
+    @TableLogic
+    private Integer deleted;
+
+    @TableField("createtime")
+    private LocalDateTime createtime;
+
+    @TableField("updatetime")
+    private LocalDateTime updatetime;
+
+
 }

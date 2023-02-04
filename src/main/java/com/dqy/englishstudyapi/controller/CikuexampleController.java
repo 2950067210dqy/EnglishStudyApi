@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2023-02-03
  */
 @RestController
-@RequestMapping("prounce")
-public class ProunceController {
+@RequestMapping("cikuexample")
+public class CikuexampleController {
 
 }

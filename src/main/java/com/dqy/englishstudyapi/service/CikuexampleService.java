@@ -1,6 +1,6 @@
 package com.dqy.englishstudyapi.service;
 
-import com.dqy.englishstudyapi.tablebean.Prounce;
+import com.dqy.englishstudyapi.tablebean.Cikuexample;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author 邓亲优
  * @since 2023-02-03
  */
-public interface ProunceService extends IService<Prounce> {
+public interface CikuexampleService extends IService<Cikuexample> {
 
 }

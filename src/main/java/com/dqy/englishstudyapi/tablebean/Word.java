@@ -28,17 +28,26 @@ import io.swagger.annotations.ApiModelProperty;
 @ToString
 @AllArgsConstructor
 @Repository
-@TableName("ciku")
-@ApiModel(value = "Ciku对象", description = "")
-public class Ciku implements Serializable {
+@TableName("word")
+@ApiModel(value = "Word对象", description = "")
+public class Word implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @TableField("desc")
-    private String desc;
+    @TableField("word")
+    private String word;
+
+    @TableField("trans")
+    private String trans;
+
+    @TableField("soundmark1")
+    private String soundmark1;
+
+    @TableField("soundmark2")
+    private String soundmark2;
 
     @TableField("deleted")
     @TableLogic

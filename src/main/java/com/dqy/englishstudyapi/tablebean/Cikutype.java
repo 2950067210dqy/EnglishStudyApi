@@ -28,9 +28,9 @@ import io.swagger.annotations.ApiModelProperty;
 @ToString
 @AllArgsConstructor
 @Repository
-@TableName("ciku")
-@ApiModel(value = "Ciku对象", description = "")
-public class Ciku implements Serializable {
+@TableName("cikutype")
+@ApiModel(value = "Cikutype对象", description = "")
+public class Cikutype implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

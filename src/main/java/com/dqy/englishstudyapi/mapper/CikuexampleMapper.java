@@ -1,6 +1,6 @@
 package com.dqy.englishstudyapi.mapper;
 
-import com.dqy.englishstudyapi.tablebean.Prounce;
+import com.dqy.englishstudyapi.tablebean.Cikuexample;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2023-02-03
  */
 @Mapper
-public interface ProunceMapper extends BaseMapper<Prounce> {
+public interface CikuexampleMapper extends BaseMapper<Cikuexample> {
 
 }
