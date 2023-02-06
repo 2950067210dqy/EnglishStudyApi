@@ -28,7 +28,7 @@ spring:
 
   #/：当前项目的根路径
 dqy:
-  address: "https://127.0.0.1/"
+  address: "http://127.0.0.1/"
   prounceUrl: "http://dict.youdao.com/dictvoice?type=1&audio=forklift"
   wordUrl: "https://dict.youdao.com/jsonapi_s?doctype=json&jsonversion=4"
 server:
@@ -46,6 +46,7 @@ server:
     # tomcat  URL
     uri-encoding: UTF-8
   port: 8085
+  max-http-header-size: 204800
 #  address: 127.0.0.1
 mybatis-plus:
   # mybatis

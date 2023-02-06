@@ -32,7 +32,7 @@ public class CikuServiceImpl extends ServiceImpl<CikuMapper, Ciku> implements Ci
     WordService wordService;
     @Override
     public boolean importWords(ImportWordsEntity param) {
-        if (param==null||param.getCikuId()<1||param.getCikuTypeId()<1||param.getWords().size()==0){
+        if (param==null||param.getCikuTypeId()<1||param.getWords().size()==0){
             return false;
         }
         ArrayList<String > words = param.getWords();

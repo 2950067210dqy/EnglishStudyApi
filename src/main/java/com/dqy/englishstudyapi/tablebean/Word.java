@@ -40,6 +40,9 @@ public class Word implements Serializable {
     @TableField("word")
     private String word;
 
+    @TableField("charac")
+    private String charac;
+
     @TableField("trans")
     private String trans;
 

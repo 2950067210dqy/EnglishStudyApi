@@ -48,15 +48,7 @@ public class WordServiceImpl extends ServiceImpl<WordMapper, Word> implements Wo
             //找数据
             for (String notStoreInDBWord:notStoreInDBWords
                  ) {
-                String url =requestUtil.getWordUrl();
-                MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-                params.add("q",notStoreInDBWord);
-                params.add("le","en");
-                params.add("client","web");
-                params.add("sign","1");
-                params.add("keyfrom","webdict");
-                //发送请求有道获取详细信息
-                requestUtil.sendPostRequest(url,params);
+
 
             }
             return 1;

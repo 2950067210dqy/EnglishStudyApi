@@ -1,0 +1,71 @@
+{
+  "code": 200,
+  "desc": "修改单词模块的一些参数设置",
+  "createAuthor": "superadmin",
+  "updateAuthor": "superadmin",
+  "data": {
+    "everyDayWordModule": {
+      "everyDayWord": {
+        "value": "happy",
+        "trans": "adj.快乐的；",
+        "soundmark1": "ˈhæpi",
+        "soundmark2": "ˈhæpi",
+        "soundUrl1": "",
+        "soundUrl2": "audio/2/h/happy.mp3",
+        "desc": "每日一词所展示的单词"
+      },
+     "baseEveryDayWordSize": {
+       "value": 80,
+       "desc": "每日一个单词的字体大小基本大小值,单词的长度越大 字体大小越小  字体大小=baseEveryDayWordSize -（字体长度-baseEveryDayWordFactor）*baseEveryDayWordMutipiNum"
+     },
+      "baseEveryDayWordFactor":{
+        "value":6 ,
+        "desc": "每日一个单词的基本长度"
+      },"baseEveryDayWordMutipiNum":{
+        "value":2,
+        "desc": "每日一个单词的基本乘数系数"
+      }
+    },
+    "signInModule": {
+        "signInText": {
+          "value": ["签到","领取更多积分"],
+          "desc": "签到标语"
+        }
+    },
+    "learnModule": {
+      "learnText": {
+        "value": "Learn",
+        "desc": "学习"
+      }
+    },
+    "wordBankModule":{
+      "wordBankText":{
+        "value": "Word Bank",
+        "desc": "词库"
+      }
+    },
+    "reviewModule":{
+      "reviewText":{
+        "value": "Review",
+        "desc": "复习"
+      }
+    },
+    "fabBtnModule":{
+      "fabBtn1Text":{
+        "value": "点击展开",
+        "desc": "按钮文字"
+      },
+      "fabBtn2Text": [
+        {
+          "value": "生词本",
+          "desc": "按钮文字"
+        },
+        {
+          "value": "隐藏",
+          "desc": "按钮文字"
+        }
+      ]
+    }
+  }
+
+}

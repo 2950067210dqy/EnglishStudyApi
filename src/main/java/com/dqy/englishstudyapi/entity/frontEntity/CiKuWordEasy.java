@@ -1,7 +1,5 @@
 package com.dqy.englishstudyapi.entity.frontEntity;
 
-import com.dqy.englishstudyapi.tablebean.Word;
-import com.dqy.englishstudyapi.vo.ReturnVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,10 +13,6 @@ import java.util.ArrayList;
 @NoArgsConstructor
 @ToString
 @Repository
-public class ImportWordsEntity {
+public class CiKuWordEasy {
     ArrayList<String> words;
-    Integer cikuTypeId;
-    Integer cikuId;
-    String cikuName;
-
 }

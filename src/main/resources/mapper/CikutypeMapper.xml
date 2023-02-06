@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dqy.englishstudyapi.tablebean.Cikutype">
         <id column="id" property="id" />
-        <result column="desc" property="desc" />
+        <result column="dsc" property="dsc" />
         <result column="deleted" property="deleted" />
         <result column="createtime" property="createtime" />
         <result column="updatetime" property="updatetime" />

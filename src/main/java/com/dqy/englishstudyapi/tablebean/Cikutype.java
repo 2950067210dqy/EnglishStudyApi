@@ -37,8 +37,8 @@ public class Cikutype implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @TableField("desc")
-    private String desc;
+    @TableField("dsc")
+    private String dsc;
 
     @TableField("deleted")
     @TableLogic
