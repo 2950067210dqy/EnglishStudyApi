@@ -1,9 +1,12 @@
 package com.dqy.englishstudyapi.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dqy.englishstudyapi.entity.frontEntity.ImportWordsEntity;
 import com.dqy.englishstudyapi.service.CikuService;
+import com.dqy.englishstudyapi.tablebean.Ciku;
 import com.dqy.englishstudyapi.util.JsonUtil;
 import com.dqy.englishstudyapi.util.ListUtil;
+import com.dqy.englishstudyapi.util.TimeUtil;
 import com.dqy.englishstudyapi.vo.ReturnVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,6 +29,8 @@ public class CikuController {
     CikuService cikuService;
     @Autowired
     JsonUtil jsonUtil;
+    @Autowired
+    TimeUtil timeUtil;
     ReturnVO returnVO;
     @ApiOperation(value = "导入词库",response = ReturnVO.class,notes = "导入词库")
     @RequestMapping(value = "/import",method = RequestMethod.POST)
@@ -46,6 +51,71 @@ public class CikuController {
             returnVO.setMessage(returnVO.EXECUTE_ERROR_MESSAGE);
         }
         System.out.println(returnVO);
+        return  returnVO;
+    }
+
+
+    @RequestMapping(value = "/shoucang",method = RequestMethod.POST)
+    public ReturnVO shoucang(@RequestParam("uid")  Integer uid,@RequestParam("cikutypeid")  Integer cikuTypeId,@RequestParam("cikuid") Integer cikuId){
+        returnVO = new ReturnVO();
+        if (uid==null||cikuTypeId==null||cikuId==null){
+            returnVO.setCode(500);
+            returnVO.setMessage("数据为空");
+            return  returnVO;
+        }else{
+            Ciku shoucang = new Ciku();
+            shoucang.setUid(uid);
+            shoucang.setDsc(String.valueOf(cikuTypeId));
+            shoucang.setDscabb(String.valueOf(cikuId));
+            shoucang.setCreatetime(timeUtil.getCurrentTimeLocalDateTime());
+            boolean result = cikuService.shouCang(shoucang);
+            if(result){
+                returnVO.setCode(200);
+                returnVO.setMessage("收藏成功");
+            }else{
+                returnVO.setCode(500);
+                returnVO.setMessage("收藏失败");
+            }
+        }
+        return  returnVO;
+    }
+
+    @RequestMapping(value = "/shoucangCancel",method = RequestMethod.POST)
+    public ReturnVO shoucangCancel(@RequestParam("uid")  Integer uid,@RequestParam("cikutypeid")  Integer cikuTypeId,@RequestParam("cikuid") Integer cikuId){
+        returnVO = new ReturnVO();
+        if (uid==null||cikuTypeId==null||cikuId==null){
+            returnVO.setCode(500);
+            returnVO.setMessage("数据为空");
+            return  returnVO;
+        }else{
+            Ciku shoucang = new Ciku();
+            shoucang.setUid(uid);
+            shoucang.setDsc(String.valueOf(cikuTypeId));
+            shoucang.setDscabb(String.valueOf(cikuId));
+            boolean result=cikuService.shouCangCancel(shoucang);
+            if(result){
+                returnVO.setCode(200);
+                returnVO.setMessage("取消收藏成功");
+            }else{
+                returnVO.setCode(500);
+                returnVO.setMessage("取消收藏失败");
+            }
+        }
+        return  returnVO;
+    }
+
+    @RequestMapping(value = "/selectByDsc",method = RequestMethod.POST)
+    public ReturnVO getAll(@RequestParam("cikuTypeId")  Integer cikuTypeId,@RequestParam("dsc") String dsc){
+        returnVO = new ReturnVO();
+        Ciku ciku =cikuService.selectByDsc(cikuTypeId,dsc);
+        if (ciku!=null){
+            returnVO.setCode(200);
+            returnVO.setMessage("存在该词库");
+            returnVO.setData(ciku);
+        }else {
+            returnVO.setCode(500);
+            returnVO.setMessage("不存在该词库");
+        }
         return  returnVO;
     }
 }

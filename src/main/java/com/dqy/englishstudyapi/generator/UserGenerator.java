@@ -14,12 +14,17 @@ import java.util.function.Consumer;
 public class UserGenerator {
     public static void main(String[] args) {
         List<String> tables = new ArrayList<>();
-        tables.add("ciku");
-        tables.add("cikuexample");
-        tables.add("prounce");
-        tables.add("word");
-        tables.add("testuser");
-        tables.add("cikutype");
+//        tables.add("ciku");
+//        tables.add("cikuexample");
+//        tables.add("prounce");
+//        tables.add("word");
+//        tables.add("testuser");
+//        tables.add("cikutype");
+//        tables.add("liju");
+//       tables.add("user");
+//        tables.add("nowresite");
+//          tables.add("resite");
+//          tables.add("freshword");
         FastAutoGenerator.create("jdbc:mysql://localhost:3306/englishstudy?serverTimezone=Asia/Shanghai","root","")
                 .globalConfig(builder -> {
                     builder.author("邓亲优")               //作者

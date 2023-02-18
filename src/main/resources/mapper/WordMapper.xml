@@ -14,8 +14,53 @@
         <result column="createtime" property="createtime" />
         <result column="updatetime" property="updatetime" />
     </resultMap>
-    <select id="selectByWord" resultType="com.dqy.englishstudyapi.tablebean.Word">
-        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where
+    <select id="getRandom" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> limit ${random},${limit}
+    </select>
+    <select id="selectByWord" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where BINARY
         word = #{word}
+    </select>
+    <select id="SelectLikeRightByWord" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where
+        word  like "${word}%"
+    </select>
+    <select id="SelectLikeByWordNoEq" resultMap="BaseResultMap">
+       select  * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where
+         word != #{word} and word in (
+            select word from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where
+            word  like "%${word}%"
+        )
+
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from <include refid="tableName"><property name="suffix" value="${suffix}"/></include>
+
+    </select>
+    <select id="selectByWordLike" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where word
+        like "% ${word} %" or word like "% ${word}" or word like "${word} %"
+    </select>
+
+    <select id="selectByWordBatch" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where BINARY
+        word in
+        <foreach item="item" index="index" collection="words" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="selectByIdBatch" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where id in
+        <foreach item="item" index="index" collection="exp" open="(" separator="," close=")">
+            #{item.wid}
+        </foreach>
+    </select>
+
+    <select id="selectByIdBatch2" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where id in
+        <foreach item="item" index="index" collection="wse" open="(" separator="," close=")">
+            #{item.id}
+        </foreach>
     </select>
 </mapper>

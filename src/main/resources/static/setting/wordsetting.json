@@ -34,19 +34,19 @@
     },
     "learnModule": {
       "learnText": {
-        "value": "Learn",
+        "value": "学习",
         "desc": "学习"
       }
     },
     "wordBankModule":{
       "wordBankText":{
-        "value": "Word Bank",
+        "value": "词库",
         "desc": "词库"
       }
     },
     "reviewModule":{
       "reviewText":{
-        "value": "Review",
+        "value": "复习",
         "desc": "复习"
       }
     },

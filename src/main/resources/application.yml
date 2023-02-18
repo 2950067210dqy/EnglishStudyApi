@@ -1,7 +1,7 @@
 
 spring:
   profiles:
-    active: run_server
+    active: dev
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -18,6 +18,16 @@ spring:
         static-locations: classpath:/classes!,classpath:/static,classpath:/public,classpath:/resources,classpath:/META-INF/resources,classpath:/,/,
                                            #classpath:/resources/,
                                                                                         #classpath:/static/,
+  mail:
+    username: 2950067210@qq.com
+    password: ihwfvwmxiaafdgbi
+    host: smtp.qq.com
+    properties:
+      mail:
+        stmp:
+          ssl:
+            enable: true
+    default-encoding: UTF-8
   servlet:
     multipart:
       max-file-size: 50MB  # 最大支持文件大小
@@ -31,6 +41,11 @@ dqy:
   address: "http://127.0.0.1/"
   prounceUrl: "http://dict.youdao.com/dictvoice?type=1&audio=forklift"
   wordUrl: "https://dict.youdao.com/jsonapi_s?doctype=json&jsonversion=4"
+  aliyunSmsUrl: "dysmsapi.aliyuncs.com"
+  wx-appid: "wxb599e7b5dba9cecc"
+  wx-secretid: "af3ba5748aa158bb509b013be86d7b28"
+  qq-appid: "1112199581"
+  qq-secretid: "67tdkRd5zOGliBTL"
 server:
   servlet:
     # session 30
@@ -40,12 +55,12 @@ server:
     context-path: /
   # ?URLBasicErrorController
   error:
-    path: /
+    path: /error
   # address:
   tomcat:
     # tomcat  URL
     uri-encoding: UTF-8
-  port: 8085
+  port: 8086
   max-http-header-size: 204800
 #  address: 127.0.0.1
 mybatis-plus:

@@ -33,7 +33,6 @@ import io.swagger.annotations.ApiModelProperty;
 public class Ciku implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
@@ -43,8 +42,8 @@ public class Ciku implements Serializable {
     @TableField("dsc")
     private String dsc;
 
-    @TableField("descabb")
-    private String descabb;
+    @TableField("dscabb")
+    private String dscabb;
 
     @TableField("deleted")
     @TableLogic

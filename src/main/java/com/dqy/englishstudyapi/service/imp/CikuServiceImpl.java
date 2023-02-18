@@ -1,5 +1,6 @@
 package com.dqy.englishstudyapi.service.imp;
 
+import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import com.dqy.englishstudyapi.entity.frontEntity.ImportWordsEntity;
 import com.dqy.englishstudyapi.service.WordService;
 import com.dqy.englishstudyapi.tablebean.Ciku;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -45,9 +47,48 @@ public class CikuServiceImpl extends ServiceImpl<CikuMapper, Ciku> implements Ci
             ArrayList<String> partWords = wordsClassified.get(key);
             if (partWords.size()!=0){
                 //导入单词 进入单词service
-               int result= wordService.importWords(partWords,key);
+               int result= wordService.importWords(partWords, String.valueOf(key));
             }
         });
         return true;
     }
+
+    @Override
+    public ArrayList<Ciku> list(Integer tableId) {
+
+        return cikuMapper.selectAll(tableId);
+    }
+    @Override
+    public List<Ciku> listByUid(Integer cikutypeId, Integer uid) {
+        return cikuMapper.selectAllByUid(cikutypeId,uid);
+    }
+
+    @Override
+    public boolean shouCang(Ciku shoucang) {
+        return SqlHelper.retBool(cikuMapper.shouCang(shoucang));
+    }
+
+    @Override
+    public boolean shouCangCancel(Ciku shoucang) {
+        return SqlHelper.retBool(cikuMapper.shouCangCancel(shoucang));
+    }
+
+
+    @Override
+    public Ciku selectByDsc(Integer cikuTypeId, String dsc) {
+        return cikuMapper.selectByDesc(cikuTypeId,dsc);
+    }
+
+    @Override
+    public boolean save(Integer cikuTypeId, Ciku ciku) {
+        cikuMapper.createTable(cikuTypeId);
+        return SqlHelper.retBool(cikuMapper.insert(cikuTypeId,ciku));
+    }
+
+    @Override
+    public Ciku selectById(Integer cikuTypeId, Integer id) {
+        return cikuMapper.selectById(cikuTypeId,id);
+    }
+
+
 }

@@ -26,6 +26,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+<!--        邮件服务-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
@@ -126,7 +127,15 @@
             <version>2.9.2</version>
         </dependency>
 
-<!--       阿里巴巴连接池 -->
+        <!--token-->
+        <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.9.0</version>
+        </dependency>
+
+        <!--       阿里巴巴连接池 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
@@ -145,15 +154,13 @@
         </dependency>
 
 
-<!--        webclient springboot发起网络请求-->
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-webflux -->
+
+        <!--阿里云短信验证码-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-            <version>3.0.2</version>
+            <groupId>com.aliyun</groupId>
+            <artifactId>dysmsapi20170525</artifactId>
+            <version>2.0.23</version>
         </dependency>
-
-
 
 
     </dependencies>
@@ -170,6 +177,13 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.dqy.englishstudyapi.EnglishStudyApiApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

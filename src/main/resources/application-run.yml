@@ -1,10 +1,10 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    name: help
-    url: jdbc:mysql://114.119.185.255:3306/help
+    name: EnglishStudy
+    url: jdbc:mysql://114.119.185.255:3306/englishstudy
     username: root
-    password: 2591215997as
+    password: root
     type: com.alibaba.druid.pool.DruidDataSource
     # 初始化大小，最小，最大
     initial-size: 20

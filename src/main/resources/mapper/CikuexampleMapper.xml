@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dqy.englishstudyapi.mapper.CikuexampleMapper">
-
+    <sql id="tableName">cikuexample_${cikuId1}_${cikuId2}</sql>
+    <sql id="columnsName">id,initial,wid,deleted,createtime,updatetime</sql>
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dqy.englishstudyapi.tablebean.Cikuexample">
         <id column="id" property="id" />
@@ -12,4 +13,35 @@
         <result column="updatetime" property="updatetime" />
     </resultMap>
 
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from <include refid="tableName"><property name="cikuId1" value="${cikuId1}"/><property name="cikuId2" value="${cikuId2}"/></include>
+    </select>
+    <select id="select" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="cikuId1" value="${cikuId1}"/><property name="cikuId2" value="${cikuId2}"/></include>
+    </select>
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="cikuId1" value="${cikuId1}"/><property name="cikuId2" value="${cikuId2}"/></include> where id in (
+        <foreach collection="ids"  item="id" index="index" separator=",">
+            ${id}
+        </foreach>
+        )
+    </select>
+    <update id="createTable">
+        CREATE TABLE  IF NOT EXISTS <include refid="tableName"><property name="cikuId1" value="${cikuId1}"/><property name="cikuId2" value="${cikuId2}"/></include> (
+                                                                     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+                                                                     `initial` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+                                                                     `wid` INT( 10 ) NOT NULL ,
+                                                                     `deleted` INT( 2 ) NOT NULL DEFAULT '0',
+                                                                     `createtime` DATETIME NOT NULL,
+                                                                     `updatetime` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+                                                                     INDEX ( `initial` , `wid` , `updatetime` ,`deleted`)
+        ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_general_ci;
+    </update>
+    <insert id="insertBatch">
+        INSERT INTO <include refid="tableName"><property name="cikuId1" value="${cikuId1}"/><property name="cikuId2" value="${cikuId2}"/></include> ( <include refid="columnsName"></include> )
+        VALUES
+        <foreach collection ="cikuexamples" item="cikuexample" separator =",">
+            (null,#{cikuexample.initial}, ${cikuexample.wid},0,#{cikuexample.createtime},null)
+        </foreach>
+    </insert>
 </mapper>

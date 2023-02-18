@@ -1,17 +1,17 @@
 package com.dqy.englishstudyapi.service.imp;
 
+import com.dqy.englishstudyapi.entity.endEntity.WordSimpleEnd;
+import com.dqy.englishstudyapi.tablebean.Cikuexample;
 import com.dqy.englishstudyapi.tablebean.Word;
 import com.dqy.englishstudyapi.mapper.WordMapper;
 import com.dqy.englishstudyapi.service.WordService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dqy.englishstudyapi.util.RequestUtil;
-import com.dqy.englishstudyapi.vo.RequestResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -29,7 +29,7 @@ public class WordServiceImpl extends ServiceImpl<WordMapper, Word> implements Wo
     @Autowired
     RequestUtil requestUtil;
     @Override
-    public int importWords(ArrayList<String> words, Character initial) {
+    public int importWords(ArrayList<String> words, String initial) {
         if (words.size()==0||initial==null){
             return -1;
         }
@@ -37,7 +37,7 @@ public class WordServiceImpl extends ServiceImpl<WordMapper, Word> implements Wo
         List<String> notStoreInDBWords = new ArrayList<>();
         for (String word:words
              ) {
-          Word existWord =  wordMapper.selectByWord(word,initial);
+          Word existWord =  wordMapper.selectByWord(initial,word);
           if (existWord==null){
               notStoreInDBWords.add(word);
           }
@@ -56,4 +56,52 @@ public class WordServiceImpl extends ServiceImpl<WordMapper, Word> implements Wo
 
 
     }
+
+    @Override
+    public Word selectByWord(String initial, String word) {
+        return wordMapper.selectByWord(initial,word);
+    }
+
+    @Override
+    public ArrayList<Word> selectByWordBatch(String initial, ArrayList<String> partWords) {
+        return wordMapper.selectByWordBatch(initial,partWords);
+    }
+
+    @Override
+    public ArrayList<Word> selectByIdBatch(String initial, ArrayList<Cikuexample> cikuexampleArrayList) {
+        return wordMapper.selectByIdBatch(initial,cikuexampleArrayList);
+    }
+
+    @Override
+    public ArrayList<Word> selectByIdBatch2(String initial, ArrayList<WordSimpleEnd> WordSimpleEndArrayList) {
+        return wordMapper.selectByIdBatch2(initial,WordSimpleEndArrayList);
+    }
+
+
+    @Override
+    public ArrayList<Word> getCizuByWord(String initial, String word) {
+        return wordMapper.selectByWordLike(initial,word);
+    }
+
+    @Override
+    public Integer count(String initial) {
+        return wordMapper.count(initial);
+    }
+
+    @Override
+    public Word getRandom(String initial,Integer random, Integer limit) {
+        return wordMapper.getRandom(initial,random,limit);
+    }
+
+    @Override
+    public ArrayList<Word> SelectLikeRightByWord(String initial, String word) {
+        return wordMapper.SelectLikeRightByWord(initial, word);
+    }
+
+    @Override
+    public ArrayList<Word> SelectLikeByWordNoEq(String initial, String word) {
+        return wordMapper.SelectLikeByWordNoEq(initial, word);
+    }
+
+
 }

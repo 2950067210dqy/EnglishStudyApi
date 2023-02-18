@@ -1,16 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dqy.englishstudyapi.mapper.CikuMapper">
-
+    <sql id="tableName">ciku_${tableId}</sql>
+    <sql id="columnsName">id,uid,dsc,dscabb,deleted,createtime,updatetime</sql>
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.dqy.englishstudyapi.tablebean.Ciku">
         <id column="id" property="id" />
         <result column="uid" property="uid" />
         <result column="dsc" property="dsc" />
-        <result column="descabb" property="descabb" />
+        <result column="dscabb" property="dscabb" />
         <result column="deleted" property="deleted" />
         <result column="createtime" property="createtime" />
         <result column="updatetime" property="updatetime" />
     </resultMap>
-
+    <select id="selectAll" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include>
+    </select>
+    <select id="selectAllByUid" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include> where uid =${uid}
+    </select>
+    <select id="selectByDesc" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include> where dsc =#{dsc}
+    </select>
+    <select id="selectById" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include> where id =${id}
+    </select>
+    <insert id="insert" parameterType="com.dqy.englishstudyapi.tablebean.Ciku" useGeneratedKeys="true" keyProperty="ciku.id">
+        insert into <include refid="tableName"><property name="tableId" value="${tableId}"/></include>(  <include refid="columnsName"></include>  )
+        values
+        (null,${ciku.uid},#{ciku.dsc},#{ciku.dscabb},0,#{ciku.createtime},null)
+    </insert>
+    <insert id="shouCang" parameterType="com.dqy.englishstudyapi.tablebean.Ciku" useGeneratedKeys="true" keyProperty="ciku.id">
+        insert into <include refid="tableName"><property name="tableId" value="1"/></include>(  <include refid="columnsName"></include>  )
+        values
+        (null,${ciku.uid},#{ciku.dsc},#{ciku.dscabb},0,#{ciku.createtime},null)
+    </insert>
+    <update id="createTable">
+        CREATE TABLE  IF NOT EXISTS <include refid="tableName"><property name="tableId" value="${tableId}"/></include> (
+                                                              `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+                                                              `uid` INT( 10 ) NOT NULL,
+                                                              `dsc` VARCHAR( 500 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+                                                              `dscabb` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+                                                              `deleted` INT( 2 ) NOT NULL DEFAULT '0',
+                                                              `createtime` DATETIME NOT NULL,
+                                                              `updatetime` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  NULL DEFAULT CURRENT_TIMESTAMP ,
+                                                              INDEX (  `uid`,`updatetime`, `dscabb`,  `deleted` )
+        ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_general_ci;
+    </update>
+    <delete id="shouCangCancel" parameterType="com.dqy.englishstudyapi.tablebean.Ciku">
+        delete from <include refid="tableName"><property name="tableId" value="1"/></include> where uid=${ciku.uid} and dsc=#{ciku.dsc} and dscabb=#{ciku.dscabb}
+    </delete>
 </mapper>

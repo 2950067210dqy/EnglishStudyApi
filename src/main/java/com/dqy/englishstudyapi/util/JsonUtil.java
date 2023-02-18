@@ -1,19 +1,44 @@
 package com.dqy.englishstudyapi.util;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.dqy.englishstudyapi.entity.frontEntity.CikuWord;
-import com.dqy.englishstudyapi.tablebean.Word;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 @Component
 public class JsonUtil<T> {
-    public T parseJsonToJavaObject(String json, Class<T> tClass){
+    final Base64Util base64Util = new Base64Util();
+    public T parseJsonStrToJavaObject(String json, Class<T> tClass){
         JSONObject result = JSONObject.parseObject(json);
         return  JSONObject.toJavaObject(result,  tClass);
     }
+    public  ArrayList<T> parseJsonStrToArrayList(String json, Class<T> tClass){
+        ArrayList<T> result = (ArrayList<T>) JSONObject.parseArray(json,tClass);
+        return  result;
+    }
+
+    public String parseObjectToJsonString(T t){
+        return  JSONObject.toJSONString(t);
+    }
+    public String parseObjectToJsonStrThenToBase64(T t){
+        return base64Util.encodeToString(JSONObject.toJSONString(t));
+    }
+    public String parseArrayListToJsonStrThenToBase64(ArrayList<T> ts) {
+        return   base64Util.encodeToString( JSONArray.toJSONString(ts));
+    }
+    public ArrayList<T> parseBase64ToJsonStrThenToJavaArrayList(String base64, Class<T> tClass) {
+        ArrayList<T> result = (ArrayList<T>) JSONObject.parseArray(base64Util.decodeToString(base64),tClass);
+        return  result;
+    }
+
+    public T parseBase64ToJsonStrThenToJavaObject(String base64, Class<T> tClass){
+        JSONObject result = JSONObject.parseObject(base64Util.decodeToString(base64));
+        return  JSONObject.toJavaObject(result,  tClass);
+    }
+
     public void storeJson(String jsonStr,File file){
         FileWriter fileWriter =null;
         try {
@@ -66,5 +91,6 @@ public class JsonUtil<T> {
             return null;
         }
     }
+
 
 }

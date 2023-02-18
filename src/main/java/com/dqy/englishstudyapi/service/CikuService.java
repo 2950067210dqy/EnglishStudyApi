@@ -5,6 +5,7 @@ import com.dqy.englishstudyapi.tablebean.Ciku;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -17,5 +18,17 @@ import java.util.ArrayList;
 public interface CikuService extends IService<Ciku> {
 
     boolean importWords(ImportWordsEntity param);
+    ArrayList<Ciku> list(Integer tableId);
 
+    Ciku selectByDsc(Integer cikuTypeId, String dsc);
+
+    boolean save(Integer cikuTypeId, Ciku ciku);
+
+    Ciku selectById(Integer cikuTypeId, Integer id);
+
+    List<Ciku> listByUid(Integer cikutypeId, Integer uid);
+
+    boolean shouCang(Ciku shoucang);
+
+    boolean shouCangCancel(Ciku shoucang);
 }

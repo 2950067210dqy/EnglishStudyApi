@@ -1,9 +1,16 @@
 package com.dqy.englishstudyapi.controller;
 
 
+import com.dqy.englishstudyapi.service.CikutypeService;
+import com.dqy.englishstudyapi.tablebean.Cikutype;
+import com.dqy.englishstudyapi.vo.ReturnVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +23,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("cikutype")
 public class CikutypeController {
-
+    ReturnVO returnVO;
+    @Autowired
+    CikutypeService cikutypeService;
+    @RequestMapping(value = "/getAll",method = RequestMethod.POST)
+    public ReturnVO getAll(){
+        returnVO = new ReturnVO();
+        List<Cikutype> cikutypes = cikutypeService.list();
+        if (cikutypes.size()!=0){
+            returnVO.setData(cikutypes);
+            returnVO.setMessage("获取词库类型成功");
+            returnVO.setCode(200);
+        }else{
+            returnVO.setMessage("获取词库类型失败");
+            returnVO.setCode(500);
+        }
+        return  returnVO;
+    }
 }
