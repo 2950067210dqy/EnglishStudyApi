@@ -39,12 +39,12 @@ public class SmsUtil {
     public ReturnVO sendCode(PhoneVerifyCode phoneVerifyCode) throws Exception {
         ReturnVO returnVO = new ReturnVO();
         // 工程代码泄露可能会导致AccessKey泄露，并威胁账号下所有资源的安全性。以下代码示例仅供参考，建议使用更安全的 STS 方式，更多鉴权访问方式请参见：https://help.aliyun.com/document_detail/378657.html
-        com.aliyun.dysmsapi20170525.Client client =createClient("LTAI5t6KCueJ9oD1nGxtUiof", "EHFiMp5V0WuxlyxoVk1uVinIFNZwGa");
+       
         com.aliyun.dysmsapi20170525.models.SendSmsRequest sendSmsRequest = new com.aliyun.dysmsapi20170525.models.SendSmsRequest();
 //        com.aliyun.teautil.models.RuntimeOptions runtime = new com.aliyun.teautil.models.RuntimeOptions();
             sendSmsRequest
                 .setSignName("沁柚英语学习平台")
-                .setTemplateCode("SMS_269400634")
+                
                 .setPhoneNumbers(phoneVerifyCode.getPhone())
                 .setTemplateParam("{\"code\":\""+phoneVerifyCode.getCode()+"\"}");
         try {
