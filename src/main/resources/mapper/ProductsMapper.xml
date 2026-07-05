@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqy.englishstudyapi.mapper.ProductsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dqy.englishstudyapi.tablebean.Products">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="price" property="price" />
+        <result column="merchant_id" property="merchantId" />
+        <result column="img_addre" property="imgAddre" />
+        <result column="product_addre" property="productAddre" />
+        <result column="time" property="time" />
+        <result column="ptypeid" property="ptypeid" />
+        <result column="ptypesubid" property="ptypesubid" />
+        <result column="num" property="num" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+</mapper>

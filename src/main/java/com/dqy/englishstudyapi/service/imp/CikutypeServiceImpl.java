@@ -5,6 +5,7 @@ import com.dqy.englishstudyapi.mapper.CikutypeMapper;
 import com.dqy.englishstudyapi.service.CikutypeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
  * @since 2023-02-03
  */
 @Service
+//开启事务回滚
+@Transactional(rollbackFor = RuntimeException.class)
 public class CikutypeServiceImpl extends ServiceImpl<CikutypeMapper, Cikutype> implements CikutypeService {
 
 }

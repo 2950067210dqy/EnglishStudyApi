@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,4 +38,9 @@ public interface CikuMapper extends BaseMapper<Ciku> {
     Integer shouCang(@Param("ciku")Ciku shoucang);
 
     Integer shouCangCancel(@Param("ciku")Ciku shoucang);
+
+
+    List<Ciku> selectByToday(@Param("tableId")Integer cikutypeId, @Param("start")LocalDateTime startDateTime,@Param("end") LocalDateTime nowDateTime);
+
+    Ciku selectOrderByDescAndLimit(@Param("tableId")Integer cikutypeId, @Param("column")String column, @Param("start")int start, @Param("size")int size);
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqy.englishstudyapi.mapper.ResiteMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dqy.englishstudyapi.tablebean.Resite">
+        <id column="id" property="id" />
+        <result column="nowresiteid" property="nowresiteid" />
+        <result column="learn" property="learn" />
+        <result column="review1" property="review1" />
+        <result column="review2" property="review2" />
+        <result column="review4" property="review4" />
+        <result column="review7" property="review7" />
+        <result column="review15" property="review15" />
+        <result column="over" property="over" />
+        <result column="deleted" property="deleted" />
+        <result column="createtime" property="createtime" />
+        <result column="updatetime" property="updatetime" />
+    </resultMap>
+
+</mapper>

@@ -7,14 +7,16 @@ import lombok.ToString;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Repository
 public class CikuWord {
-    ArrayList<String>  UnMasteredWords;
-    ArrayList<String>  MasteredWords;
-    ArrayList<String>  VagueWords;
+    List<String> UnMasteredWords;
+    List<String>  MasteredWords;
+    List<String>  VagueWords;
 
 }

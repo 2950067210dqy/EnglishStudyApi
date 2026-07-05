@@ -22,4 +22,6 @@ public interface CikuexampleService extends IService<Cikuexample> {
     ArrayList<Cikuexample> list(Integer cikuTypeId, Integer cikuId);
 
     ArrayList<Cikuexample> listByIds(Integer cikutypeid, Integer cikuid, Integer[] cikuexampleids);
+
+    void createTable(Integer cikutypeid, Integer  cikuid);
 }

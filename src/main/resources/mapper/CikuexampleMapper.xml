@@ -14,13 +14,13 @@
     </resultMap>
 
     <select id="count" resultType="java.lang.Integer">
-        select count(*) from <include refid="tableName"><property name="cikuId1" value="${cikuId1}"/><property name="cikuId2" value="${cikuId2}"/></include>
+        select count(*) from <include refid="tableName"><property name="cikuId1" value="${cikuId1}"/><property name="cikuId2" value="${cikuId2}"/></include> where  deleted = 0
     </select>
     <select id="select" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="cikuId1" value="${cikuId1}"/><property name="cikuId2" value="${cikuId2}"/></include>
+        select * from <include refid="tableName"><property name="cikuId1" value="${cikuId1}"/><property name="cikuId2" value="${cikuId2}"/></include> where  deleted = 0
     </select>
     <select id="selectByIds" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="cikuId1" value="${cikuId1}"/><property name="cikuId2" value="${cikuId2}"/></include> where id in (
+        select * from <include refid="tableName"><property name="cikuId1" value="${cikuId1}"/><property name="cikuId2" value="${cikuId2}"/></include> where  deleted = 0 and  id in (
         <foreach collection="ids"  item="id" index="index" separator=",">
             ${id}
         </foreach>

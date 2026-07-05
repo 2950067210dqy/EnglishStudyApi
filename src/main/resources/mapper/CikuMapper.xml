@@ -13,17 +13,24 @@
         <result column="createtime" property="createtime" />
         <result column="updatetime" property="updatetime" />
     </resultMap>
+
+    <select id="selectOrderByDescAndLimit" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include> where deleted = 0 order by ${column} limit ${start},${size}
+    </select>
+    <select id="selectByToday" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include> where deleted = 0 and createtime between #{start} and #{end}
+    </select>
     <select id="selectAll" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include>
+        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include> where deleted = 0 order by  createtime desc
     </select>
     <select id="selectAllByUid" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include> where uid =${uid}
+        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include> where uid =${uid} and deleted = 0
     </select>
     <select id="selectByDesc" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include> where dsc =#{dsc}
+        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include> where dsc =#{dsc} and deleted = 0
     </select>
     <select id="selectById" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include> where id =${id}
+        select * from <include refid="tableName"><property name="tableId" value="${tableId}"/></include> where id =${id} and deleted = 0
     </select>
     <insert id="insert" parameterType="com.dqy.englishstudyapi.tablebean.Ciku" useGeneratedKeys="true" keyProperty="ciku.id">
         insert into <include refid="tableName"><property name="tableId" value="${tableId}"/></include>(  <include refid="columnsName"></include>  )
@@ -43,7 +50,7 @@
                                                               `dscabb` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
                                                               `deleted` INT( 2 ) NOT NULL DEFAULT '0',
                                                               `createtime` DATETIME NOT NULL,
-                                                              `updatetime` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  NULL DEFAULT CURRENT_TIMESTAMP ,
+                                                            `updatetime` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
                                                               INDEX (  `uid`,`updatetime`, `dscabb`,  `deleted` )
         ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_general_ci;
     </update>

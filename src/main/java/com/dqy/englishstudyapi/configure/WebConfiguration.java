@@ -56,19 +56,36 @@ public class WebConfiguration implements WebMvcConfigurer {
         excludePath.add("/user/loginByPhone");  //登录
         excludePath.add("/user/wxlogin");  //登录
         excludePath.add("/user/qqlogin");  //登录
-        excludePath.add("/user/selectByPhone");  //登录
-        excludePath.add("/user/selectByEmail");  //登录
+        excludePath.add("/user/selectByPhone");
+        excludePath.add("/user/selectByEmail");
+        excludePath.add("/user/selectByUsername");
         excludePath.add("/user/register");     //注册
         excludePath.add("/user/updatePwd");
-        excludePath.add("/file/uploadImageRegister");     //注册
+
+        excludePath.add("/adminUser/loginByUserName"); //登录
+        excludePath.add("/adminUser/loginByPhone");  //登录
+        excludePath.add("/adminUser/wxlogin");  //登录
+        excludePath.add("/adminUser/qqlogin");  //登录
+        excludePath.add("/adminUser/selectByPhone");  //登录
+        excludePath.add("/adminUser/selectByEmail");  //登录
+        excludePath.add("/adminUser/register");     //注册
+        excludePath.add("/adminUser/updatePwd");
+
+
+
+        excludePath.add("/file/uploadImageRegister");
+        excludePath.add("/word/getOneOpen");
+        excludePath.add("/wordFull/getOneOpen");
         //获取验证码
         excludePath.add("/code/getcode");
+        excludePath.add("/pay/**");
         excludePath.add("/code/getcodeEmail");
         excludePath.add("/code/verifyCode");
         excludePath.add("/code/verifyCodeRegist");
         excludePath.add("/code/verifyCodeEmail");
         excludePath.add("/code/verifyCodeEmailRegist");
         excludePath.add("/liju/getByWord");
+        excludePath.add("/baidu/trans");
         excludePath.add("/doc.html");     //swagger
         excludePath.add("/swagger-ui.html");     //swagger
         excludePath.add("/swagger-resources/**");     //swagger

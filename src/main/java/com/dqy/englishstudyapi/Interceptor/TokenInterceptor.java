@@ -14,13 +14,24 @@ public class TokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
 
+
         //跨域请求会首先发一个option请求，直接返回正常状态并通过拦截器
         if(request.getMethod().equals("OPTIONS")){
             response.setStatus(HttpServletResponse.SC_OK);
             return true;
         }
+
         response.setCharacterEncoding("utf-8");
         String token = request.getHeader("token");
+
+        //访问管理员api
+        if (request.getRequestURI().indexOf("admin")>0){
+            boolean result= TokenUtils.verify2(token);
+            if (result){
+                System.out.println("通过拦截器");
+                return true;
+            }
+        }
         if (token!=null){
             boolean result= TokenUtils.verify(token);
             if (result){
@@ -32,7 +43,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         try {
             JSONObject json=new JSONObject();
             json.put("msg","token verify fail");
-            json.put("code","520");
+            json.put("code",520);
             response.getWriter().append(json.toString());
             System.out.println("认证失败，未通过拦截器");
         } catch (Exception e) {

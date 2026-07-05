@@ -2,7 +2,11 @@ package com.dqy.englishstudyapi.util;
 
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 @Component
 public class RandomUtil {
@@ -18,6 +22,8 @@ public class RandomUtil {
         }
         return new String(result);
     }
+
+
     public String randomNumber(Integer length) {
         char[] basicArray = BASIC2.toCharArray();
         Random random = new Random();
@@ -38,5 +44,11 @@ public class RandomUtil {
         Random random = new Random();
         Integer result = random.nextInt(end - start + 1) + start;
         return result;
+    }
+
+    public  String getOrderRandom(Integer uid){
+        String time = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String user = UUID.randomUUID().toString().replace("-","").toUpperCase();
+        return time+user+uid;
     }
 }

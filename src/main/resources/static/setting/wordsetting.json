@@ -3,6 +3,7 @@
   "desc": "修改单词模块的一些参数设置",
   "createAuthor": "superadmin",
   "updateAuthor": "superadmin",
+  "bgUrl": "",
   "data": {
     "everyDayWordModule": {
       "everyDayWord": {
@@ -35,19 +36,19 @@
     "learnModule": {
       "learnText": {
         "value": "学习",
-        "desc": "学习"
+        "desc": "学习标语"
       }
     },
     "wordBankModule":{
       "wordBankText":{
         "value": "词库",
-        "desc": "词库"
+        "desc": "词库标语"
       }
     },
     "reviewModule":{
       "reviewText":{
         "value": "复习",
-        "desc": "复习"
+        "desc": "复习标语"
       }
     },
     "fabBtnModule":{

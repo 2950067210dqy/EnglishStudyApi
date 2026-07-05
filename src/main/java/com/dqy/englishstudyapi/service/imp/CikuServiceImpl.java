@@ -10,7 +10,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dqy.englishstudyapi.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,6 +27,8 @@ import java.util.List;
  * @since 2023-02-03
  */
 @Service
+//开启事务回滚
+@Transactional(rollbackFor = RuntimeException.class)
 public class CikuServiceImpl extends ServiceImpl<CikuMapper, Ciku> implements CikuService {
     @Autowired
     ListUtil listUtil;
@@ -55,11 +59,12 @@ public class CikuServiceImpl extends ServiceImpl<CikuMapper, Ciku> implements Ci
 
     @Override
     public ArrayList<Ciku> list(Integer tableId) {
-
+        createTable(tableId);
         return cikuMapper.selectAll(tableId);
     }
     @Override
     public List<Ciku> listByUid(Integer cikutypeId, Integer uid) {
+        createTable(cikutypeId);
         return cikuMapper.selectAllByUid(cikutypeId,uid);
     }
 
@@ -73,9 +78,33 @@ public class CikuServiceImpl extends ServiceImpl<CikuMapper, Ciku> implements Ci
         return SqlHelper.retBool(cikuMapper.shouCangCancel(shoucang));
     }
 
+    @Override
+    public List<Ciku> select(Integer cikutypeId) {
+        createTable(cikutypeId);
+        return cikuMapper.selectAll(cikutypeId);
+    }
+
+    @Override
+    public List<Ciku> selectByToday(Integer cikutypeId, LocalDateTime startDateTime, LocalDateTime nowDateTime) {
+        createTable(cikutypeId);
+        return cikuMapper.selectByToday(cikutypeId,startDateTime,nowDateTime);
+    }
+
+    @Override
+    public Ciku selectOrderByDescAndLimit(Integer cikutypeId, String column, int start, int size) {
+        createTable(cikutypeId);
+        return cikuMapper.selectOrderByDescAndLimit(cikutypeId,column,start,size);
+    }
+
+    @Override
+    public void createTable(Integer cikutypeId) {
+       cikuMapper.createTable(cikutypeId);
+    }
+
 
     @Override
     public Ciku selectByDsc(Integer cikuTypeId, String dsc) {
+        createTable(cikuTypeId);
         return cikuMapper.selectByDesc(cikuTypeId,dsc);
     }
 
@@ -87,6 +116,7 @@ public class CikuServiceImpl extends ServiceImpl<CikuMapper, Ciku> implements Ci
 
     @Override
     public Ciku selectById(Integer cikuTypeId, Integer id) {
+        createTable(cikuTypeId);
         return cikuMapper.selectById(cikuTypeId,id);
     }
 

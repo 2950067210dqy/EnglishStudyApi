@@ -37,4 +37,11 @@ public interface WordService extends IService<Word> {
     ArrayList<Word> SelectLikeByWordNoEq(String initial, String word);
 
 
+    ArrayList<Word> SelectLikeLeftByWord(String initial, String word);
+
+    ArrayList<Word> SelectLikeByWord(String initial, String word);
+
+    ArrayList<Word> selectAllByTrans(String word);
+
+    void createTable(String initial);
 }

@@ -25,13 +25,41 @@ public class UserGenerator {
 //        tables.add("nowresite");
 //          tables.add("resite");
 //          tables.add("freshword");
+//          tables.add("recitedata");
+//          tables.add("recitedatasum");
+//          tables.add("score");
+//          tables.add("scoresource");
+//          tables.add("scoresourcetype");
+//          tables.add("signin");
+//         tables.add("products");
+//          tables.add("shop");
+//          tables.add("zborder");
+//          tables.add("ptype");
+//          tables.add("ptypesub");
+//          tables.add("order");
+//          tables.add("orderstatus");
+//          tables.add("address");
+//          tables.add("tags");
+//          tables.add("studycircle");
+//          tables.add("comment");
+//          tables.add("studycirclelike");
+//          tables.add("testtype");
+//          tables.add("test");
+//          tables.add("testerror");
+//          tables.add("testlike");
+//          tables.add("testrecord");
+//          tables.add("readtype");
+//          tables.add("readtypesub");
+//          tables.add("read");
+//          tables.add("gamedata");
+//          tables.add("gamedatamax");
         FastAutoGenerator.create("jdbc:mysql://localhost:3306/englishstudy?serverTimezone=Asia/Shanghai","root","")
                 .globalConfig(builder -> {
                     builder.author("邓亲优")               //作者
                             .outputDir(System.getProperty("user.dir")+"\\src\\main\\java")    //输出路径(写到java目录)
                             .enableSwagger()           //开启swagger
-                            .commentDate("yyyy-MM-dd");
-//                            .fileOverride();            //开启覆盖之前生成的文件
+                            .commentDate("yyyy-MM-dd")
+                            .fileOverride();            //开启覆盖之前生成的文件
 
                 })
                 .packageConfig(builder -> {

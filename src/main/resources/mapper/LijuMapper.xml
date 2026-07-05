@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqy.englishstudyapi.mapper.LijuMapper">
+    <sql id="tableName">liju_${suffix}</sql>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dqy.englishstudyapi.tablebean.Liju">
+        <id column="id" property="id" />
+        <result column="word" property="word" />
+        <result column="sentences" property="sentences" />
+        <result column="deleted" property="deleted" />
+        <result column="createtime" property="createtime" />
+        <result column="updatetime" property="updatetime" />
+    </resultMap>
+    <select id="getByWord" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and  BINARY
+        word = #{word}
+    </select>
+    <update id="createTable">
+        CREATE TABLE  IF NOT EXISTS <include refid="tableName"><property name="suffix" value="${suffix}"/></include> (
+        `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+        `word` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+        `sentences` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+        `deleted` INT( 2 ) NOT NULL DEFAULT '0',
+        `createtime` DATETIME NOT NULL ,
+        `updatetime` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+        INDEX ( `word` , `deleted` , `updatetime` )
+        ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_general_ci;
+    </update>
+</mapper>

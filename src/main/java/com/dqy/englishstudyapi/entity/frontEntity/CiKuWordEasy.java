@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,5 +15,5 @@ import java.util.ArrayList;
 @ToString
 @Repository
 public class CiKuWordEasy {
-    ArrayList<String> words;
+    List<String> words;
 }

@@ -32,6 +32,7 @@ public class TokenUtils {
                     .withIssuer("dqy")
                     //存放数据
                     .withClaim("username",user.getUsername())
+                    .withClaim("type",user.getType())
                     //过期时间
                     .withExpiresAt(expireAt)
                     .sign(Algorithm.HMAC256(TOKEN_SECRET));
@@ -48,11 +49,13 @@ public class TokenUtils {
      * @return
      */
     public static Boolean verify(String token){
- 
+
         try {
             //创建token验证器
             JWTVerifier jwtVerifier=JWT.require(Algorithm.HMAC256(TOKEN_SECRET)).withIssuer("dqy").build();
             DecodedJWT decodedJWT=jwtVerifier.verify(token);
+
+
             System.out.println("认证通过：");
             System.out.println("username: " + decodedJWT.getClaim("username").asString());
             System.out.println("过期时间：      " + decodedJWT.getExpiresAt());
@@ -62,5 +65,24 @@ public class TokenUtils {
         }
         return true;
     }
- 
+
+    public static boolean verify2(String token) {
+        try {
+            //创建token验证器
+            JWTVerifier jwtVerifier=JWT.require(Algorithm.HMAC256(TOKEN_SECRET)).withIssuer("dqy").build();
+            DecodedJWT decodedJWT=jwtVerifier.verify(token);
+            Integer type = Integer.valueOf(decodedJWT.getClaim("type").asString());
+            if (type!=1){
+                System.out.println("不是管理员：");
+                return false;
+            }
+            System.out.println("认证通过：");
+            System.out.println("username: " + decodedJWT.getClaim("username").asString());
+            System.out.println("过期时间：      " + decodedJWT.getExpiresAt());
+        } catch (IllegalArgumentException | JWTVerificationException e) {
+            //抛出错误即为验证不通过
+            return false;
+        }
+        return true;
+    }
 }

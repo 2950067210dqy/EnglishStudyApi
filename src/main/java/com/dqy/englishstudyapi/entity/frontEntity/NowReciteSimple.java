@@ -16,9 +16,11 @@ public class NowReciteSimple {
     Integer uid;
     Integer cikuTypeId;
     Integer cikuId;
+    String dscabb;
     String dsc;
     Integer type;
     Integer reciteid;
+    Integer count;
     Integer learnCount;
     Integer reviewCount;
 }

@@ -7,6 +7,7 @@ import com.dqy.englishstudyapi.service.CikuexampleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -20,27 +21,38 @@ import java.util.ArrayList;
  * @since 2023-02-03
  */
 @Service
+//开启事务回滚
+@Transactional(rollbackFor = RuntimeException.class)
 public class CikuexampleServiceImpl extends ServiceImpl<CikuexampleMapper, Cikuexample> implements CikuexampleService {
     @Autowired
     CikuexampleMapper cikuexampleMapper;
     @Override
     public Integer count(Integer cikutypeId, Integer cikuId) {
+        createTable(cikutypeId,cikuId);
         return cikuexampleMapper.count(cikutypeId,cikuId);
     }
 
     @Override
     public boolean insertBatch(Integer cikuTypeId, Integer cikuId, ArrayList<Cikuexample> cikuexamples) {
+        createTable(cikuTypeId,cikuId);
         cikuexampleMapper.createTable(cikuTypeId, cikuId);
         return SqlHelper.retBool(cikuexampleMapper.insertBatch(cikuTypeId,cikuId,cikuexamples));
     }
 
     @Override
     public ArrayList<Cikuexample> list(Integer cikuTypeId, Integer cikuId) {
+        createTable(cikuTypeId,cikuId);
         return cikuexampleMapper.select(cikuTypeId,cikuId);
     }
 
     @Override
     public ArrayList<Cikuexample> listByIds(Integer cikutypeid, Integer cikuid, Integer[] cikuexampleids) {
+        createTable(cikutypeid,cikuid);
         return cikuexampleMapper.selectByIds(cikutypeid,cikuid,cikuexampleids);
+    }
+
+    @Override
+    public void createTable(Integer cikutypeid, Integer cikuid) {
+        cikuexampleMapper.createTable(cikutypeid,cikuid);
     }
 }

@@ -1,7 +1,7 @@
 
 spring:
   profiles:
-    active: dev
+    active: run_server
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -15,7 +15,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
   web:                                                                                 #springboot 默认访问文件夹路径
     resources:                                                                         #classpath:/META-INF/resources/,
-        static-locations: classpath:/classes!,classpath:/static,classpath:/public,classpath:/resources,classpath:/META-INF/resources,classpath:/,/,
+        static-locations: file:/Download/englishStudy/,file:/Download/englishStudy,file:,file:/,file:static/,file:/static,classpath:/static,classpath:/public,classpath:/resources,classpath:/META-INF/resources,classpath:/,/,
                                            #classpath:/resources/,
                                                                                         #classpath:/static/,
   mail:
@@ -38,10 +38,13 @@ spring:
 
   #/：当前项目的根路径
 dqy:
-  address: "http://127.0.0.1/"
+#  address: "http://192.168.50.33:8086/"
+#  address: "https://www.dengqinyou.cn/"
+  address: "http://47.116.17.195:8086/"
   prounceUrl: "http://dict.youdao.com/dictvoice?type=1&audio=forklift"
   wordUrl: "https://dict.youdao.com/jsonapi_s?doctype=json&jsonversion=4"
   aliyunSmsUrl: "dysmsapi.aliyuncs.com"
+  aliyunLogisticsUrl: "https://wuliu.market.alicloudapi.com/kdi"
   wx-appid: "wxb599e7b5dba9cecc"
   wx-secretid: "af3ba5748aa158bb509b013be86d7b28"
   qq-appid: "1112199581"

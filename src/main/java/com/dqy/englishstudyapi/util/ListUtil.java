@@ -3,6 +3,7 @@ package com.dqy.englishstudyapi.util;
 import com.dqy.englishstudyapi.entity.endEntity.ReviewEnd;
 import com.dqy.englishstudyapi.entity.endEntity.WordSimpleEnd;
 import com.dqy.englishstudyapi.tablebean.Cikuexample;
+import com.dqy.englishstudyapi.tablebean.Word;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
@@ -79,6 +80,8 @@ public class ListUtil<T> {
         return  result;
     }
 
+
+
     //得到空的 分类的hashmap  {'a':[],'b':[],'c':[].......}
     public HashMap<Character, ArrayList<WordSimpleEnd>> getEmptyWordSimpleEndListClassifyByInitial(){
         HashMap<Character, ArrayList<WordSimpleEnd>> result = new HashMap<Character, ArrayList<WordSimpleEnd>>();
@@ -115,6 +118,16 @@ public class ListUtil<T> {
         for (Character initial:
                 abs) {
             result.put(initial,new ArrayList<String>());
+        }
+
+        return result;
+    }
+    //得到空的 分类的hashmap  {'a':[],'b':[],'c':[].......}
+    public HashMap<Character, ArrayList<Word>> getEmptyWordListClassifyByInitial(){
+        HashMap<Character, ArrayList<Word>> result = new HashMap<Character, ArrayList<Word>>();
+        for (Character initial:
+                abs) {
+            result.put(initial,new ArrayList<Word>());
         }
 
         return result;

@@ -15,35 +15,47 @@
         <result column="updatetime" property="updatetime" />
     </resultMap>
     <select id="getRandom" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> limit ${random},${limit}
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 limit ${random},${limit}
     </select>
     <select id="selectByWord" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where BINARY
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and BINARY
         word = #{word}
     </select>
+    <select id="selectByTrans" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and
+        trans like "%${trans}%"
+    </select>
     <select id="SelectLikeRightByWord" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and
         word  like "${word}%"
     </select>
+    <select id="SelectLikeLeftByWord" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and
+        word  like "%${word}"
+    </select>
+    <select id="SelectLikeByWord" resultMap="BaseResultMap">
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and
+        word  like "%${word}%"
+    </select>
     <select id="SelectLikeByWordNoEq" resultMap="BaseResultMap">
-       select  * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where
-         word != #{word} and word in (
-            select word from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where
-            word  like "%${word}%"
+       select  * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and
+        word != #{word} and word in (
+            select word from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and
+        word  like "%${word}%"
         )
 
     </select>
     <select id="count" resultType="java.lang.Integer">
-        select count(*) from <include refid="tableName"><property name="suffix" value="${suffix}"/></include>
+        select count(*) from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0
 
     </select>
     <select id="selectByWordLike" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where word
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and  word
         like "% ${word} %" or word like "% ${word}" or word like "${word} %"
     </select>
 
     <select id="selectByWordBatch" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where BINARY
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and BINARY
         word in
         <foreach item="item" index="index" collection="words" open="(" separator="," close=")">
             #{item}
@@ -51,16 +63,30 @@
     </select>
 
     <select id="selectByIdBatch" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where id in
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and  id in
         <foreach item="item" index="index" collection="exp" open="(" separator="," close=")">
             #{item.wid}
         </foreach>
     </select>
 
     <select id="selectByIdBatch2" resultMap="BaseResultMap">
-        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where id in
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and  id in
         <foreach item="item" index="index" collection="wse" open="(" separator="," close=")">
             #{item.id}
         </foreach>
     </select>
+    <update id="createTable">
+        CREATE TABLE  IF NOT EXISTS <include refid="tableName"><property name="suffix" value="${suffix}"/></include> (
+        `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+        `word` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+        `charac` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+        `trans` VARCHAR( 1500 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+        `soundmark1` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+        `soundmark2` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+        `deleted` INT( 2 ) NOT NULL DEFAULT '0',
+        `createtime` DATETIME NOT NULL,
+        `updatetime` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,
+        INDEX ( `word` ,`charac` ,`updatetime` ,`deleted`)
+        ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_general_ci;
+    </update>
 </mapper>

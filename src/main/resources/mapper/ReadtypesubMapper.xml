@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqy.englishstudyapi.mapper.ReadtypesubMapper">
+    <sql id="tableName">readtypesub_${suffix}</sql>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dqy.englishstudyapi.tablebean.Readtypesub">
+        <id column="id" property="id" />
+        <result column="dsc" property="dsc" />
+        <result column="deleted" property="deleted" />
+        <result column="createtime" property="createtime" />
+        <result column="updatetime" property="updatetime" />
+    </resultMap>
+
+    <update id="createTable">
+        CREATE TABLE IF NOT EXISTS  <include refid="tableName"><property name="suffix" value="${suffix}"/></include>  (
+                                                      `id` INT NOT NULL AUTO_INCREMENT ,
+                                                      `dsc` VARCHAR( 500 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+                                                      `deleted` INT( 3 ) NOT NULL DEFAULT '0',
+                                                      `createtime` DATETIME NOT NULL ,
+                                                      `updatetime` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+                                                      PRIMARY KEY ( `id` ) ,
+                                                      INDEX ( `dsc` , `deleted` , `updatetime` )
+        ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_general_ci;
+    </update>
+</mapper>

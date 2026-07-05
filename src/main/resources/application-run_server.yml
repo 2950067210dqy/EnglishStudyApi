@@ -3,8 +3,8 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     name: EnglishStudy
     url: jdbc:mysql://localhost:3306/englishstudy
-    username: root
-    password:
+    username: dqy
+    password: 2591215997As!
     type: com.alibaba.druid.pool.DruidDataSource
     # 初始化大小，最小，最大
     initial-size: 20

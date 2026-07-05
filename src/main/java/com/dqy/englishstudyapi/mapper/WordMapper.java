@@ -40,4 +40,11 @@ public interface WordMapper extends BaseMapper<Word> {
     ArrayList<Word> SelectLikeByWordNoEq(@Param("suffix")String initial,@Param("word") String word);
 
 
+    ArrayList<Word> SelectLikeLeftByWord(@Param("suffix")String initial, @Param("word")String word);
+
+    ArrayList<Word> SelectLikeByWord(@Param("suffix")String initial,@Param("word") String word);
+
+    ArrayList<Word> selectByTrans(@Param("suffix")String initial,@Param("trans") String word);
+
+    void createTable(@Param("suffix")String initial);
 }

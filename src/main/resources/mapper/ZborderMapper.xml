@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqy.englishstudyapi.mapper.ZborderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dqy.englishstudyapi.tablebean.Zborder">
+        <id column="id" property="id" />
+        <id column="uid" property="uid" />
+        <result column="zbcode" property="zbcode" />
+        <result column="money" property="money" />
+        <result column="zborderid" property="zborderid" />
+        <result column="dsc" property="dsc" />
+        <result column="dscabb" property="dscabb" />
+        <result column="status" property="status" />
+        <result column="deleted" property="deleted" />
+        <result column="createtime" property="createtime" />
+        <result column="updatetime" property="updatetime" />
+    </resultMap>
+
+</mapper>

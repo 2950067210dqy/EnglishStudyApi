@@ -1,14 +1,83 @@
 package com.dqy.englishstudyapi.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.net.FileNameMap;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 @Component
-public class FileUtil {
+public class FileUtil<T> {
+    @Autowired
+    JsonUtil jsonUtil;
+    public void copyFile(String oldPath, String newPath) {
+        try {
+            int bytesum = 0;
+            int byteread = 0;
+            File oldfile = new File(oldPath);
+            if (oldfile.exists()) { //文件存在时
+                InputStream inStream = new FileInputStream(oldPath); //读入原文件
+                FileOutputStream fs = new FileOutputStream(newPath);
+                byte[] buffer = new byte[1444];
+                int length;
+                while ( (byteread = inStream.read(buffer)) != -1) {
+                    bytesum += byteread; //字节数 文件大小
+                    System.out.println(bytesum);
+                    fs.write(buffer, 0, byteread);
+                }
+                inStream.close();
+            }
+        }
+        catch (Exception e) {
+            System.out.println("复制单个文件操作出错");
+            e.printStackTrace();
+        }
+    }
+    public byte[] readDataToBytes(InputStream fileInputStream){
+        byte[] bdata=null;
+        try {
+            bdata = FileCopyUtils.copyToByteArray(fileInputStream );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return bdata;
+    }
+    public byte[] readDataToBytes(File file){
+        byte[] bdata=null;
+        try {
+             bdata = FileCopyUtils.copyToByteArray(new FileInputStream(file));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return bdata;
+    }
+
+    public String readDataToString(File file){
+        String data =null;
+        byte[] bdata=readDataToBytes(file);
+        if (bdata==null){
+            return  data;
+        }
+        data = new String(bdata, StandardCharsets.UTF_8);
+        return  data;
+    }
+
+    public T readDataToJavaObject(File file){
+        T t = null;
+        String data =null;
+        byte[] bdata=readDataToBytes(file);
+        if (bdata==null){
+            return  t;
+        }
+        data = new String(bdata, StandardCharsets.UTF_8);
+        t =(T)jsonUtil.parseJsonStrToJavaObject(data,t.getClass());
+        return  t;
+    }
 
     public File getFile(MultipartFile multipartFile){
         // 获取文件名

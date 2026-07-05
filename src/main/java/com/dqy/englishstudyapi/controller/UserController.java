@@ -6,13 +6,16 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.dqy.englishstudyapi.entity.frontEntity.FrontUser;
 import com.dqy.englishstudyapi.entity.frontEntity.WxReturnUser;
+import com.dqy.englishstudyapi.service.ScoreService;
 import com.dqy.englishstudyapi.service.UserService;
+import com.dqy.englishstudyapi.tablebean.Score;
 import com.dqy.englishstudyapi.tablebean.User;
 import com.dqy.englishstudyapi.util.HttpClientUtil;
 import com.dqy.englishstudyapi.util.RandomUtil;
 import com.dqy.englishstudyapi.util.TimeUtil;
 import com.dqy.englishstudyapi.util.TokenUtils;
 import com.dqy.englishstudyapi.vo.ReturnVO;
+import com.dqy.englishstudyapi.vo.SubReturnVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -26,7 +29,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -50,12 +56,96 @@ public class UserController {
     @Autowired
     UserService userService;
     @Autowired
+    ScoreService scoreService;
+    @Autowired
     HttpClientUtil httpClientUtil;
     @Autowired
     RandomUtil randomUtil;
     @Autowired
     TimeUtil timeUtil;
     ReturnVO returnVO;
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public ReturnVO update(@RequestBody User user){
+        returnVO = new ReturnVO();
+        if (user==null){
+            returnVO.setCode(500);
+            returnVO.setMessage("数据为空");
+            return  returnVO;
+        }else{
+            boolean result =  userService.updateById(user);
+            if (result){
+                returnVO.setCode(200);
+                returnVO.setMessage("修改成功");
+                returnVO.setData(user);
+            }else{
+                returnVO.setCode(500);
+                returnVO.setMessage("修改失败");
+            }
+        }
+
+
+        return  returnVO;
+    }
+
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
+    public ReturnVO save(@RequestBody User user){
+        returnVO = new ReturnVO();
+        if (user==null){
+            returnVO.setCode(500);
+            returnVO.setMessage("数据为空");
+            return  returnVO;
+        }else{
+            user.setCreatetime(timeUtil.getNowLocalDateTime());
+            user.setDeleted(0);
+            boolean result =  userService.save(user);
+            if (result){
+                SubReturnVo subReturnVo =  scoreService.setScore(user.getId(),5,null);
+                if (subReturnVo.isResult()){
+                    returnVO.setCode(200);
+                    returnVO.setMessage("注册成功");
+                }else{
+                    returnVO.setCode(500);
+                    returnVO.setMessage(subReturnVo.getMessage());
+                }
+            }else{
+                returnVO.setCode(500);
+                returnVO.setMessage("添加失败");
+            }
+        }
+
+
+        return  returnVO;
+    }
+    @RequestMapping(value = "/getFullUser",method = RequestMethod.POST)
+    public ReturnVO getFullUser(@RequestParam("id")Integer id){
+        returnVO = new ReturnVO();
+        User user = userService.getById(id);
+        if (user!=null){
+            returnVO.setCode(200);
+            returnVO.setMessage("获取成功");
+            returnVO.setData(user);
+        }else{
+            returnVO.setCode(500);
+            returnVO.setMessage("获取失败");
+        }
+
+        return returnVO;
+    }
+    @RequestMapping(value = "/getUser",method = RequestMethod.POST)
+    public ReturnVO getUser(@RequestParam("id")Integer id){
+        returnVO = new ReturnVO();
+        User user = userService.getById(id);
+        if (user!=null){
+            returnVO.setCode(200);
+            returnVO.setMessage("获取成功");
+            returnVO.setData(user);
+        }else{
+            returnVO.setCode(500);
+            returnVO.setMessage("获取失败");
+        }
+
+        return returnVO;
+    }
 
 
     @RequestMapping(value = "/checkToken",method = RequestMethod.POST)
@@ -151,7 +241,21 @@ public class UserController {
         return  returnVO;
     }
 
+    @RequestMapping(value = "/selectByUsername",method = RequestMethod.POST)
+    public ReturnVO selectByUsername(@RequestParam("username")String username){
+        returnVO = new ReturnVO();
 
+        User user = userService.getOne(new QueryWrapper<User>().eq("username",username));
+        if (user!=null){
+            returnVO.setCode(200);
+            returnVO.setMessage("存在");
+        }else{
+            returnVO.setCode(500);
+            returnVO.setMessage("不存在");
+        }
+
+        return  returnVO;
+    }
 
 
 
@@ -199,7 +303,21 @@ public class UserController {
             return  returnVO;
         }
         User user = userService.getOne(new QueryWrapper<User>().eq("phone",phone));
+
         if (user!=null){
+            Score score = scoreService.getOne(new QueryWrapper<Score>().eq("uid",user.getId()));
+            SubReturnVo subReturnVo =null;
+            if (score==null){
+                subReturnVo=scoreService.setScore(user.getId(),5,null);
+            }
+            if (subReturnVo!=null){
+                if (subReturnVo.getCode()!=200){
+                    returnVO.setCode(subReturnVo.getCode());
+                    returnVO.setMessage(subReturnVo.getMessage());
+                    return  returnVO;
+                }
+            }
+
             FrontUser frontUser = new FrontUser();
             frontUser.setUser(user);
             frontUser.setToken(getToken(user));
@@ -232,7 +350,6 @@ public class UserController {
             wxReturnUser.setUnionid((String) object.get("unionid"));
             wxReturnUser.setOpenid((String) object.get("openid"));
             wxReturnUser.setSession_key((String) object.get("session_key"));
-
             User temptUser = new User();
             temptUser.setUsername(wxReturnUser.getOpenid());
             User loginUser =userService.getOne(new QueryWrapper<User>().eq("username",temptUser.getUsername()));
@@ -242,6 +359,9 @@ public class UserController {
                 frontUser.setToken(getToken(loginUser));
                 returnVO.setCode(200);
                 returnVO.setData(frontUser);
+                List<Integer> type = new ArrayList<>();
+                type.add(0);
+                returnVO.setDatas(Collections.singletonList(type));
                 returnVO.setMessage("登录成功");
             }else{
                 User storeUser = new User();
@@ -249,7 +369,7 @@ public class UserController {
                 storeUser.setHeadimage("bg1.jpg");
                 storeUser.setName("默认用户"+randomUtil.randomAll(4));
                 storeUser.setPassword("123456");
-                storeUser.setPhone("1234567890");
+                storeUser.setPhone("");
                 storeUser.setSex(0);
                 storeUser.setAge(18);
                 storeUser.setEmail("");
@@ -259,13 +379,22 @@ public class UserController {
                 storeUser.setCreatetime(timeUtil.getCurrentTimeLocalDateTime());
                 boolean result =userService.save(storeUser);
                 if(result){
+                    SubReturnVo subReturnVo =  scoreService.setScore(storeUser.getId(),5,null);
+                    if (subReturnVo.isResult()){
+                        FrontUser frontUser = new FrontUser();
+                        frontUser.setUser(storeUser);
+                        frontUser.setToken(getToken(storeUser));
+                        returnVO.setCode(250);
+                        returnVO.setData(frontUser);
+                        List<Integer> type = new ArrayList<>();
+                        type.add(1);
+                        returnVO.setDatas(Collections.singletonList(type));
+                        returnVO.setMessage("注册成功且登录成功");
+                    }else{
+                        returnVO.setCode(500);
+                        returnVO.setMessage(subReturnVo.getMessage());
+                    }
 
-                    FrontUser frontUser = new FrontUser();
-                    frontUser.setUser(storeUser);
-                    frontUser.setToken(getToken(storeUser));
-                    returnVO.setCode(200);
-                    returnVO.setData(frontUser);
-                    returnVO.setMessage("注册成功且登录成功");
                 }else{
                     returnVO.setCode(500);
                     returnVO.setMessage("登录成功但注册失败");
@@ -344,6 +473,74 @@ public class UserController {
         }
 
         return  returnVO;
+    }
+
+    @RequestMapping(value = "/rejisterByWx",method = RequestMethod.POST)
+
+    public ReturnVO rejisterByWx(@RequestParam("uid")Integer uid,@RequestParam(value = "phone") String phone,@RequestParam("headimage")String headimage,@RequestParam("name")String name) throws JsonProcessingException {
+        returnVO = new ReturnVO();
+        if (uid==null||null==phone||phone.trim().equals("")||null==headimage||headimage.trim().equals("")||null==name||name.trim().equals("")){
+            returnVO.setCode(500);
+            returnVO.setMessage("参数不为空");
+            return  returnVO;
+        }
+        User user = userService.getById(uid);
+
+        if (user!=null){
+            user.setName(name);
+            user.setHeadimage(headimage);
+            user.setPhone(phone);
+            user.setUpdatetime(timeUtil.getCurrentTimeLocalDateTime());
+            boolean result = userService.updateById(user);
+            if (result){
+                FrontUser frontUser = new FrontUser();
+                frontUser.setUser(user);
+                frontUser.setToken(getToken(user));
+                returnVO.setCode(200);
+                returnVO.setData(frontUser);
+                returnVO.setMessage("登录成功");
+            }else{
+                returnVO.setCode(500);
+                returnVO.setMessage("注册信息失败");
+            }
+
+        }else{
+            returnVO.setCode(500);
+            returnVO.setMessage("找不到该用户");
+        }
+        return returnVO;
+
+    }
+
+    @RequestMapping(value = "/deleteById",method = RequestMethod.POST)
+
+    public ReturnVO deleteById(@RequestParam("id")Integer id) throws JsonProcessingException {
+        returnVO = new ReturnVO();
+        if (id==null){
+            returnVO.setCode(500);
+            returnVO.setMessage("参数不为空");
+            return  returnVO;
+        }
+        User user = userService.getById(id);
+
+        if (user!=null&&user.getType()!=-1){
+
+            boolean result = userService.removeById(user);
+            if (result){
+
+                returnVO.setCode(200);
+                returnVO.setMessage("注销成功");
+            }else{
+                returnVO.setCode(500);
+                returnVO.setMessage("注销失败");
+            }
+
+        }else{
+            returnVO.setCode(500);
+            returnVO.setMessage("找不到该用户或权限错误");
+        }
+        return returnVO;
+
     }
     public String getToken(User user){
         return  TokenUtils.sign(user);

@@ -4,6 +4,7 @@ import com.dqy.englishstudyapi.entity.frontEntity.ImportWordsEntity;
 import com.dqy.englishstudyapi.tablebean.Ciku;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,4 +32,13 @@ public interface CikuService extends IService<Ciku> {
     boolean shouCang(Ciku shoucang);
 
     boolean shouCangCancel(Ciku shoucang);
+
+
+    List<Ciku> select(Integer cikutypeId);
+
+    List<Ciku> selectByToday(Integer cikutypeId, LocalDateTime startDateTime, LocalDateTime nowDateTime);
+
+    Ciku selectOrderByDescAndLimit(Integer cikutypeId, String column, int start, int size);
+
+    void createTable(Integer cikutypeId);
 }

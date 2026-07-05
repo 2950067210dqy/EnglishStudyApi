@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dqy.englishstudyapi.mapper.TestMapper">
+    <sql id="tableName">test_${suffix}</sql>
+    <sql id="columnsName">id,title,opta,optb,optc,optd,answer,analy,deleted,createtime,updatetime</sql>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.dqy.englishstudyapi.tablebean.Test">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="opta" property="opta" />
+        <result column="optb" property="optb" />
+        <result column="optc" property="optc" />
+        <result column="optd" property="optd" />
+        <result column="answer" property="answer" />
+        <result column="analy" property="analy" />
+        <result column="deleted" property="deleted" />
+        <result column="createtime" property="createtime" />
+        <result column="updatetime" property="updatetime" />
+    </resultMap>
+
+    <select id="getById" resultMap="BaseResultMap" >
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0 and id = ${id}
+    </select>
+
+    <select id="list" resultMap="BaseResultMap" >
+        select * from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0  order by updatetime desc limit ${current},${size}
+    </select>
+    <select id="count" resultType="java.lang.Integer" >
+        select count(*) from <include refid="tableName"><property name="suffix" value="${suffix}"/></include> where  deleted = 0
+    </select>
+    <update id="createTableIfNotExist">
+        CREATE TABLE IF NOT EXISTS  englishstudy.<include refid="tableName"><property name="suffix" value="${suffix}"/></include> (
+                                                              `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+                                                              `title` VARCHAR( 1000 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+                                                              `opta` VARCHAR( 500 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+                                                              `optb` VARCHAR( 500 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+                                                              `optc` VARCHAR( 500 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+                                                              `optd` VARCHAR( 500 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+                                                              `answer` INT( 12 ) NOT NULL ,
+                                                              `analy` VARCHAR( 2000 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+                                                              `deleted` INT( 3 ) NOT NULL DEFAULT '0',
+                                                              `createtime` DATETIME NOT NULL ,
+                                                              `updatetime` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+                                                              INDEX ( `answer` , `deleted` , `updatetime` )
+        ) ENGINE = INNODB CHARACTER SET utf8 COLLATE utf8_general_ci;
+    </update>
+</mapper>
